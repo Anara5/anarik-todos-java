@@ -45,7 +45,7 @@ public class TodosTests {
         Assertions.assertEquals(todos.getTask(), task);
 
         // list contains after removing
-        Todos.removeTask(task);
-        Assertions.assertFalse(Todos.getTodosList().contains(task));
+        todos.removeTask(task);
+        Assertions.assertFalse(todos.getTodosList().contains(task));
     }
 }
