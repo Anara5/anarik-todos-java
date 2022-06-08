@@ -7,45 +7,43 @@ public class TodosTests {
     // тесты для класса Todos
     @Test
     public void addTodoToList() {
-        Todos todos = new Todos();
-        todos.addTask("Аnarik");
-        String task = todos.toString();
-        todos.addTaskToList();
-
-        Assertions.assertEquals(todos.getTask(), task);
+        Todos to = new Todos();
+        String task = "Anarik";
+        to.addTaskToList(task);
+        Assertions.assertEquals(to.getAllTodos(), "Anarik ");
     }
+
     @Test
     public void addTodoToListAndSortThem() {
-        Todos todos1 = new Todos();
-        todos1.addTask("Komarik");
-        todos1.addTaskToList();
+        Todos to = new Todos();
+        String task1 = "Komarik";
+        to.addTaskToList(task1);
 
-        Todos todos2 = new Todos();
-        todos2.addTask("Fonarik");
-        todos2.addTaskToList();
+        String task2 = "Fonarik";
+        to.addTaskToList(task2);
 
-        Todos todos3 = new Todos();
-        todos3.addTask("Binarik");
-        todos3.addTaskToList();
+        String task3 = "Binarik";
+        to.addTaskToList(task3);
 
-        Todos todos4 = new Todos();
-        todos4.addTask("Anarik");
-        todos4.addTaskToList();
+        String task4 = "Anarik";
+        to.addTaskToList(task4);
 
-        Assertions.assertEquals("Anarik Binarik Fonarik Komarik ", Todos.getAllTasks());
+        Assertions.assertEquals("Anarik Binarik Fonarik Komarik ", to.getAllTodos());
     }
     @Test
     public void removeTodoFromList() {
-        Todos todos = new Todos();
-        todos.addTask("Аnarik");
-        String task = todos.toString();
-        todos.addTaskToList();
+        Todos to = new Todos();
+        String task1 = "Anarik";
+        String task2 = "Fonarik";
 
-        // list contains before removing
-        Assertions.assertEquals(todos.getTask(), task);
+        // содержимое списка до удаления задачи
+        to.addTaskToList(task1);
+        to.addTaskToList(task2);
+        Assertions.assertEquals(to.getAllTodos(), "Anarik Fonarik ");
 
-        // list contains after removing
-        todos.removeTask(task);
-        Assertions.assertFalse(todos.getTodosList().contains(task));
+        // содержимое списка после удаления задачи
+        to.removeTaskFromList(task1);
+        Assertions.assertFalse(to.getTodosList().contains(task1));
+        Assertions.assertEquals(to.getAllTodos(), "Fonarik ");
     }
 }

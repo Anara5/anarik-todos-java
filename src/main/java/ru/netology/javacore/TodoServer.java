@@ -1,10 +1,6 @@
 package ru.netology.javacore;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.internal.GsonBuildConfig;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -20,32 +16,33 @@ public class TodoServer {
     }
 
     public void start() {
-        String input;
+        System.out.println("Starting server at " + port + "...");
+
         Gson gson = new Gson();
         // server connection
         try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Starting server at " + port + "...");
 
             while (true) {
                 try (Socket socket = serverSocket.accept();
                      PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                      BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                     input = in.readLine();
+                    final String input = in.readLine();
 
                     Manager manage = gson.fromJson(input, Manager.class);
                     String type = manage.type;
                     String task = manage.task;
 
                     if (type.equals("ADD")) {
-                        new Todos().addTask(task);
+                        todos.addTaskToList(task);
                         out.println("Задача: " + task + " внесена в список.");
                     }
                     if (type.equals("REMOVE")) {
-                        new Todos().removeTask(task);
+                        todos.removeTaskFromList(task);
                         out.println("Задача " + task + " удалена из списка.");
                     }
-                    out.println("Полный список задач: " + todos.getAllTasks());
+
+                    out.println("Полный список задач: " + todos.getAllTodos());
                 }
             }
         } catch (IOException e) {
